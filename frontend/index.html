@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Connection Status Banner -->
+    <div id="connection-banner" class="banner hidden">Reconnecting... Signal Lost</div>
+
+    <!-- Auth View -->
+    <div id="auth-view" class="view">
+        <div class="auth-card glass">
+            <h2>Ground Control Login</h2>
+            <div class="auth-tabs">
+                <button id="tab-login" class="active">Login</button>
+                <button id="tab-register">Register</button>
+            </div>
+
+            <form id="auth-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="input-group" id="role-group" style="display: none;">
+                    <label for="role">Role</label>
+                    <select id="role">
+                        <option value="Viewer">Viewer (Read-Only)</option>
+                        <option value="Commander">Commander (Control)</option>
+                    </select>
+                </div>
+                <div id="auth-error" class="error-msg"></div>
+                <button type="submit" class="btn-primary">Authenticate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view" class="view hidden">
+        <header class="glass-header">
+            <div>
+                <h1>Ground Control Station</h1>
+                <span id="user-role-badge" class="badge">Viewer</span>
+            </div>
+            <button id="btn-logout" class="btn-secondary">Logout</button>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Left Sidebar -->
+            <aside class="sidebar telemetry-panel glass">
+                <h3>Telemetry</h3>
+                <div class="telemetry-items">
+                    <div class="stat">
+                        <span class="label">Battery</span>
+                        <span id="stat-battery" class="val">--%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">State</span>
+                        <span id="stat-state" class="val">--</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Coordinates</span>
+                        <span id="stat-coords" class="val">(--, --)</span>
+                    </div>
+                </div>
+
+                <div class="sensors-panel">
+                    <h4>Proximity Sensors</h4>
+                    <div class="sensor-grid">
+                        <div></div>
+                        <div class="sensor-val" id="sens-n">N: --</div>
+                        <div></div>
+                        <div class="sensor-val" id="sens-w">W: --</div>
+                        <div class="sensor-center">Robot</div>
+                        <div class="sensor-val" id="sens-e">E: --</div>
+                        <div></div>
+                        <div class="sensor-val" id="sens-s">S: --</div>
+                        <div></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center Map -->
+            <section class="map-panel glass">
+                <div id="grid-container" class="grid-container">
+                    <!-- Javascript will populate 21x21 grid here -->
+                </div>
+            </section>
+
+            <!-- Right Sidebar -->
+            <aside class="sidebar control-panel glass">
+                <h3>Commander Controls</h3>
+                <div class="control-pad" id="control-pad">
+                    <div></div>
+                    <button class="dir-btn" data-dir="north">N</button>
+                    <div></div>
+                    <button class="dir-btn" data-dir="west">W</button>
+                    <div class="pad-center"></div>
+                    <button class="dir-btn" data-dir="east">E</button>
+                    <div></div>
+                    <button class="dir-btn" data-dir="south">S</button>
+                    <div></div>
+                </div>
+                <div id="control-msg" class="info-msg">Viewing mode only. Commands disabled.</div>
+
+                <div class="audit-log-panel">
+                    <h3>Recent Logs</h3>
+                    <ul id="audit-logs" class="log-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
