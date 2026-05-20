@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  robotsim:
+    image: ghcr.io/francescodelduchetto/cmp9134_2526_robotsim:latest
+    ports:
+      - "5000:5000"
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./frontend:/frontend
+    depends_on:
+      - robotsim
+    environment:
+      - ROBOT_API_URL=http://robotsim:5000

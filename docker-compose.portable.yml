@@ -1,0 +1,21 @@
+version: '3.8'
+
+# This compose file uses pre-built/saved images — no internet needed.
+# Used automatically by launch.bat when images/ folder is present.
+
+services:
+  robotsim:
+    image: ghcr.io/francescodelduchetto/cmp9134_2526_robotsim:latest
+    ports:
+      - "5000:5000"
+
+  backend:
+    image: vrms-backend:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./frontend:/frontend
+    depends_on:
+      - robotsim
+    environment:
+      - ROBOT_API_URL=http://robotsim:5000
